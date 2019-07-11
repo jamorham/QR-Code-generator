@@ -23,7 +23,7 @@
 
 package io.nayuki.qrcodegen;
 
-import java.awt.image.BufferedImage;
+//import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -296,6 +296,7 @@ public final class QrCode {
 	 * @throws IllegalArgumentException if the scale or border is out of range, or if
 	 * {scale, border, size} cause the image dimensions to exceed Integer.MAX_VALUE
 	 */
+	/**
 	public BufferedImage toImage(int scale, int border) {
 		if (scale <= 0 || border < 0)
 			throw new IllegalArgumentException("Value out of range");
@@ -311,7 +312,7 @@ public final class QrCode {
 		}
 		return result;
 	}
-	
+	*/
 	
 	/**
 	 * Returns a string of SVG code for an image depicting this QR Code, with the specified number
