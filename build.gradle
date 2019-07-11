@@ -5,7 +5,7 @@ version = "1.4.0"
 
 buildscript {
     repositories {
-        google();
+        google()
         jcenter()
         mavenCentral()
     }
@@ -65,8 +65,8 @@ artifacts {
 
 allprojects {
     repositories {
-
-        maven { url 'https://maven.google.com' }
-
+        google()
+        jcenter()
+        mavenCentral()
     }
 }
