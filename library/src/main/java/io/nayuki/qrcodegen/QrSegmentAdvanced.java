@@ -23,10 +23,12 @@
 
 package io.nayuki.qrcodegen;
 
+
+
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
+
 import java.util.List;
 import java.util.Objects;
 import io.nayuki.qrcodegen.QrSegment.Mode;
@@ -138,10 +140,10 @@ public final class QrSegmentAdvanced {
 				curCosts[2] = prevCosts[2] + 20;  // 3.33 bits per digit
 				charModes[i][2] = modeTypes[2];
 			}
-			if (isKanji(c)) {
+			/*if (isKanji(c)) {
 				curCosts[3] = prevCosts[3] + 78;  // 13 bits per Shift JIS char
 				charModes[i][3] = modeTypes[3];
-			}
+			}*/
 			
 			// Start new segment at the end to switch modes
 			for (int j = 0; j < numModes; j++) {  // To mode
@@ -201,8 +203,8 @@ public final class QrSegmentAdvanced {
 				result.add(QrSegment.makeNumeric(s));
 			else if (curMode == Mode.ALPHANUMERIC)
 				result.add(QrSegment.makeAlphanumeric(s));
-			else if (curMode == Mode.KANJI)
-				result.add(makeKanji(s));
+			/*else if (curMode == Mode.KANJI)
+				result.add(makeKanji(s));*/
 			else
 				throw new AssertionError();
 			if (i >= codePoints.length)
@@ -211,14 +213,18 @@ public final class QrSegmentAdvanced {
 			start = i;
 		}
 	}
-	
-	
+
+
 	// Returns a new array of Unicode code points (effectively
 	// UTF-32 / UCS-4) representing the given UTF-16 string.
 	private static int[] toCodePoints(String s) {
-		int[] result = s.codePoints().toArray();
+		int[] result = new int[s.length()];
+		for (int i = 0; i < s.length(); i++) {
+			result[i] = s.codePointAt(i);
+		}
+		//int[] result = s.codePoints().toArray();
 		for (int c : result) {
-			if (Character.isSurrogate((char)c))
+			if (Character.isSurrogate((char) c))
 				throw new IllegalArgumentException("Invalid UTF-16 string");
 		}
 		return result;
@@ -237,7 +243,7 @@ public final class QrSegmentAdvanced {
 	
 	
 	
-	/*---- Kanji mode segment encoder ----*/
+/*	*//*---- Kanji mode segment encoder ----*//*
 	
 	/**
 	 * Returns a segment representing the specified text string encoded in kanji mode.
@@ -250,11 +256,12 @@ public final class QrSegmentAdvanced {
 	 * @throws NullPointerException if the string is {@code null}
 	 * @throws IllegalArgumentException if the string contains non-encodable characters
 	 * @see #isEncodableAsKanji(String)
-	 */
+	 *//*
 	public static QrSegment makeKanji(String text) {
 		Objects.requireNonNull(text);
 		BitBuffer bb = new BitBuffer();
-		text.chars().forEachOrdered(c -> {
+
+		text.toCharArray().forEachOrdered(c -> {
 			int val = UNICODE_TO_QR_KANJI[c];
 			if (val == -1)
 				throw new IllegalArgumentException("String contains non-kanji-mode characters");
@@ -274,7 +281,7 @@ public final class QrSegmentAdvanced {
 	 * @return {@code true} iff each character is in the kanji mode character set
 	 * @throws NullPointerException if the string is {@code null}
 	 * @see #makeKanji(String)
-	 */
+	 *//*
 	public static boolean isEncodableAsKanji(String text) {
 		Objects.requireNonNull(text);
 		return text.chars().allMatch(
@@ -415,7 +422,7 @@ public final class QrSegmentAdvanced {
 		}
 	}
 	
-	
+	*/
 	
 	/*---- Miscellaneous ----*/
 	
